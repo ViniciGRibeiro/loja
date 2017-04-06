@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 include('../db/index.php');
 
 if(	isset($_POST['email']) && 
@@ -16,7 +19,9 @@ if(	isset($_POST['email']) &&
 				$_POST['senha']))));
 	
 	$query = odbc_exec($db, 
-					"SELECT idUsuario, tipoPerfil 
+					"SELECT 
+					nomeUsuario,
+					idUsuario, tipoPerfil 
 					FROM Usuario
 					WHERE 
 					loginUsuario = '$email'
@@ -25,11 +30,15 @@ if(	isset($_POST['email']) &&
 					HASHBYTES('SHA1','$senha')");
 	$result = odbc_fetch_array($query);
 	
-	if(	!empty($result['idUsuario']) &&
+	if(	!empty($result['idUsuario']) 	&&
 		!empty($result['tipoPerfil'])){
 		
-		echo 'ENTROU';
-			
+		$_SESSION['idUsuario'] = $result['idUsuario'];
+		$_SESSION['tipoPerfil'] = $result['tipoPerfil'];
+		$_SESSION['nomeUsuario'] = $result['nomeUsuario'];
+				
+		header('Location: ../menu/');
+		
 	}else{
 		$erro = 'Email ou Senha Incorretos';
 	}
