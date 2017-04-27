@@ -35,7 +35,10 @@ if(isset($msg)){
 					<td>{$usuario['nomeUsuario']}</td>
 					<td>{$usuario['tipoPerfil']}</td>
 					<td>{$usuario['usuarioAtivo']}</td>
-					<td>Editar</td>
+					<td>
+<a href='?acao=editar&id={$usuario['idUsuario']}'>					
+					Editar</a>					
+					</td>
 					<td>
 <a href='?acao=excluir&id={$usuario['idUsuario']}'>
 						Excluir
